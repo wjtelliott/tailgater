@@ -1,6 +1,6 @@
 # Tailgater Backend
 
-A backend api for our front end `PROJECT NAME`
+A backend api for our front end `thehood`
 
 ***
 
@@ -15,7 +15,7 @@ We will include the following data on our database for the listed cars:
 | year | number |
 | color | string |
 | milage | number |
-| condition | enum? |
+| condition | number |
 | userId | user collection reference |
 
 ***
@@ -39,10 +39,10 @@ We will include the following data on our database for the signed up users:
 
 | Route Type | Path | Purpose |
 | ---------- | ---- | ------- |
-| GET | /users | Get user information |
-| POST | /users | Add a new signed up user |
-| PATCH | /users | Update user information |
+| GET | `/users` | Get user information |
+| POST | `/users` | Add a new signed up user |
+| PATCH | `/users` | Update user information |
 | \/\/\/ | \/\/\/ | \/\/\/ |
-| GET | /cars | Get car listings |
-| POST | /cars | Post new car listing |
-| PATCH | /cars | Update a car listing |
+| GET | `/cars` | Get car listings |
+| POST | `/cars` | Post new car listing |
+| PATCH | `/cars` | Update a car listing |
