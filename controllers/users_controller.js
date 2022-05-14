@@ -1,4 +1,5 @@
-const { userSchema } = require('./models/')
+const { userSchema } = require('../models/')
+const router = require ("express").Router()
 
 router.get("/", (req, res) => {
     userSchema.find()
