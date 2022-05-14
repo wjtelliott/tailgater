@@ -1,10 +1,14 @@
-const { userSchema } = require('./models/')
+const { userSchema } = require('../models/')
+const router = require ("express").Router()
 
 router.get("/", (req, res) => {
-    userSchema.find()
+    userSchema.find().lean()
         .then((users) => {
-            //const {psw, ... bodyInfo} = users
-            res.json(users);
+            const newData = users.map((user) =>{
+                const {psw, ... bodyInfo} = user
+                return bodyInfo
+            })
+            res.json(newData);
         })
         .catch((err) => {
             console.log(err);
