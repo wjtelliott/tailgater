@@ -2,7 +2,19 @@ const { userSchema } = require('../models/')
 const router = require ("express").Router()
 
 router.get("/", (req, res) => {
-    userSchema.find().lean()
+    const
+        begin = req.body?.startIndex ?? 0,
+        end = req.body?.endIndex ?? 10,
+
+        //* We have to filter out psw here so we aren't able to search by password guesses
+        { psw, ...filteredParams } = req.body?.search ?? {};
+
+    userSchema
+        .find(typeof filteredParams === 'object' &&
+            !Array.isArray(filteredParams) ? filteredParams : {})
+        .skip(begin)
+        .limit(end)
+        .lean()
         .then((users) => {
             const newData = users.map((user) =>{
                 const {psw, ... bodyInfo} = user
