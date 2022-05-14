@@ -2,7 +2,17 @@ const { userSchema } = require('../models/')
 const router = require ("express").Router()
 
 router.get("/", (req, res) => {
-    userSchema.find().lean()
+    const
+        begin = req.body?.startIndex ?? 0,
+        end = req.body?.endIndex ?? 10,
+        searchParams = req.body?.search ?? {};
+
+    userSchema
+        .find(typeof searchParams === 'object' &&
+            !Array.isArray(searchParams) ? searchParams : {})
+        .skip(begin)
+        .limit(end)
+        .lean()
         .then((users) => {
             const newData = users.map((user) =>{
                 const {psw, ... bodyInfo} = user
