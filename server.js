@@ -1,6 +1,7 @@
 // DEPENDENCIES
 const express = require('express')
 const app = express()
+require('dotenv').config()
 const {cars_controller: carsController, users_controller: usersController} = require ("./controllers")
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URI,
@@ -9,12 +10,12 @@ mongoose.connect(process.env.MONGO_URI,
         useUnifiedTopology: true
     },
     () => {
-        console.log('Connected to mongo! Seeding server...')
+        console.log('Connected to mongo!')
     }
 )
 
 // CONFIGURATION / MIDDLEWARE
-require('dotenv').config()
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
