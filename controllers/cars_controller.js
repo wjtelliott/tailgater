@@ -3,8 +3,13 @@ const router = require ("express").Router()
 
 router.get("/", (req, res) => {
     carSchema.find()
+        .populate('userId')
         .then((cars) => {
-            res.json(cars);
+            const formattedCars = cars.map(car => {
+                car.userId = car.userId.revokePassword();
+                return car;
+            })
+            res.json(formattedCars);
         })
         .catch((err) => {
             console.log(err);

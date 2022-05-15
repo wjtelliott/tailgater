@@ -12,12 +12,8 @@ router.get("/", (req, res) => {
             !Array.isArray(searchParams) ? searchParams : {})
         .skip(begin)
         .limit(end)
-        .lean()
         .then((users) => {
-            const newData = users.map((user) =>{
-                const {psw, ... bodyInfo} = user
-                return bodyInfo
-            })
+            const newData = users.map(user => user.revokePassword())
             res.json(newData);
         })
         .catch((err) => {
