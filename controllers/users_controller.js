@@ -5,11 +5,13 @@ router.get("/", (req, res) => {
     const
         begin = req.body?.startIndex ?? 0,
         end = req.body?.endIndex ?? 10,
-        { psw, ...searchParams } = req.body?.search ?? {};
+
+        //* We have to filter out psw here so we aren't able to search by password guesses
+        { psw, ...filteredParams } = req.body?.search ?? {};
 
     userSchema
-        .find(typeof searchParams === 'object' &&
-            !Array.isArray(searchParams) ? searchParams : {})
+        .find(typeof filteredParams === 'object' &&
+            !Array.isArray(filteredParams) ? filteredParams : {})
         .skip(begin)
         .limit(end)
         .then((users) => {

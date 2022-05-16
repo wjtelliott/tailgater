@@ -12,8 +12,9 @@ router.get("/", (req, res) => {
             res.json(formattedCars);
         })
         .catch((err) => {
+
             console.log(err);
-        });
+    });
 });
 
 router.post("/", (req, res) => {
