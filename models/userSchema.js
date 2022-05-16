@@ -15,4 +15,13 @@ const
         state: String
     });
 
+/**
+ * Call this when we don't want to show a password to the client
+ */
+userSchema.methods.revokePassword = function() {
+    const { psw, ...otherProperties } = this._doc;
+    this._doc = otherProperties;
+    return this;
+}
+
 module.exports = mongoose.model('users', userSchema);

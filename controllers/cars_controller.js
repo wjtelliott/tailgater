@@ -2,22 +2,17 @@ const { carSchema } = require('../models/')
 const router = require ("express").Router()
 
 router.get("/", (req, res) => {
+    carSchema.find()
+        .populate('userId')
+        .then((cars) => {
+            const formattedCars = cars.map(car => {
+                car.userId = car.userId.revokePassword();
+                return car;
+            })
+            res.json(formattedCars);
+        })
+        .catch((err) => {
 
-    const
-    begin = req.body?.startIndex ?? 0,
-    end = req.body?.endIndex ?? 10,
-    { filteredParams } = req.body?.search ?? {};
-
-carsSchema
-    .find(typeof filteredParams === 'object' &&
-        !Array.isArray(filteredParams) ? filteredParams : {})
-    .skip(begin)
-    .limit(end)
-    .lean()
-    .then((cars) => {
-        res.json(cars);
-    })
-    .catch((err) => {
             console.log(err);
     });
 });

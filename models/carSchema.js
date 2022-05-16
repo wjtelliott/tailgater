@@ -11,9 +11,9 @@ const
         condition: Number,
         //? should this be required?
         imageUrl: String,
-        userId: [{
+        userId: {
             type: Schema.Types.ObjectId, ref: 'users'
-        }],
+        },
     });
 
 module.exports = mongoose.model('cars', carSchema);
