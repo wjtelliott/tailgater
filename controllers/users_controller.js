@@ -5,7 +5,7 @@ router.get("/", (req, res) => {
     const
         begin = req.body?.startIndex ?? 0,
         end = req.body?.endIndex ?? 10,
-        searchParams = req.body?.search ?? {};
+        { psw, ...searchParams } = req.body?.search ?? {};
 
     userSchema
         .find(typeof searchParams === 'object' &&
