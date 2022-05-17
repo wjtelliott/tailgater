@@ -6,7 +6,7 @@ router.get("/", (req, res) => {
         .populate('userId')
         .then((cars) => {
             const formattedCars = cars.map(car => {
-                car.userId = car.userId.revokePassword();
+                car.userId = car.userId.revokeLogin();
                 return car;
             })
             res.json(formattedCars);

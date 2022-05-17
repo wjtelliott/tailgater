@@ -5,21 +5,20 @@ router.get("/", (req, res) => {
     const
         begin = req.body?.startIndex ?? 0,
         end = req.body?.endIndex ?? 10,
-
-        //* We have to filter out psw here so we aren't able to search by password guesses
-        { psw, ...filteredParams } = req.body?.search ?? {};
+        searchParams = req.body?.search ?? {};
 
     userSchema
-        .find(typeof filteredParams === 'object' &&
-            !Array.isArray(filteredParams) ? filteredParams : {})
+        .find(typeof searchParams === 'object' &&
+            !Array.isArray(searchParams) ? searchParams : {})
         .skip(begin)
         .limit(end)
-        .then((users) => {
-            const newData = users.map(user => user.revokePassword())
+        .then(users => {
+            const newData = users.map(user => user.revokeLogin());
             res.json(newData);
         })
-        .catch((err) => {
+        .catch(err => {
             console.log(err);
+            res.status(404).json({error: err});
         });
 });
 
