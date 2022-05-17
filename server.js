@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
 // CONTROLLERS  
 app.use('/cars', carsController)
 
-app.use('/user', usersController)
+app.use('/users', usersController)
 
 // LISTEN
 app.listen(process.env.PORT, () => {
