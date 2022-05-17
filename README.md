@@ -41,8 +41,8 @@ We will include the following data on our database for the signed up users:
 | ---------- | ---- | ------- |
 | GET | `/users` | Get user information |
 | POST | `/users` | Add a new signed up user |
-| PATCH | `/users` | Update user information |
+| PUT | `/users` | Update user information |
 | \/\/\/ | \/\/\/ | \/\/\/ |
 | GET | `/cars` | Get car listings |
 | POST | `/cars` | Post new car listing |
-| PATCH | `/cars` | Update a car listing |
+| PUT | `/cars` | Update a car listing |
