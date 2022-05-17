@@ -4,7 +4,7 @@ const router = require ("express").Router()
 router.get("/", (req, res) => {
     const
         begin = req.body?.startIndex ?? 0,
-        end = req.body?.endIndex ?? 10,
+        end = req.body?.limit ?? 10,
         searchParams = req.body?.search ?? {};
 
     userSchema
@@ -22,8 +22,31 @@ router.get("/", (req, res) => {
         });
 });
 
-router.post("/", (req, res) => {
-    userSchema.create(req.body)
+router.post("/", async (req, res) => {
+
+    const {
+        name,
+        userLogin,
+        email,
+        phone,
+        city,
+        state } = req.body;
+    
+    // Check to make sure we have the required fields before worrying about a db call
+    if (!name || !userLogin || !email) return res.status(404).json({ error: `You didn't have the required fields` });
+
+
+    // Check for an existing user with the same userID or email
+    const data = await userSchema.find({
+        $or: [
+            { userLoginId: userLogin },
+            { email: email }
+        ]
+    });
+    if (+data.length) return res.status(404).json({ error: `There is already a user with that login information` });
+
+
+    userSchema.create({ name, userLoginId: userLogin, email, phone, city, state })
         .then((createdUser) => {
             res.json(createdUser);
         })
