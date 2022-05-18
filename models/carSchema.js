@@ -11,6 +11,7 @@ const
         condition: Number,
         //? should this be required?
         imageUrl: String,
+        price: Number,
         userId: {
             type: Schema.Types.ObjectId, ref: 'users'
         },
