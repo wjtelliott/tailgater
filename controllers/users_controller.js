@@ -1,17 +1,10 @@
 const { userSchema } = require('../models/')
 const router = require ("express").Router()
 
-router.get("/", (req, res) => {
-    const
-        begin = req.body?.startIndex ?? 0,
-        end = req.body?.limit ?? 10,
-        searchParams = req.body?.search ?? {};
+router.get("/:id", (req, res) => {
 
     userSchema
-        .find(typeof searchParams === 'object' &&
-            !Array.isArray(searchParams) ? searchParams : {})
-        .skip(begin)
-        .limit(end)
+        .find(userLoginId, req.params.id)
         .then(users => {
             const newData = users.map(user => user.revokeLogin());
             res.json(newData);
