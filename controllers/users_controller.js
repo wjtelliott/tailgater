@@ -2,25 +2,26 @@ const { userSchema } = require('../models/')
 const router = require ("express").Router()
 
 router.get("/", (req, res) => {
-    const
-        begin = req.body?.startIndex ?? 0,
-        end = req.body?.limit ?? 10,
-        searchParams = req.body?.search ?? {};
-
     userSchema
-        .find(typeof searchParams === 'object' &&
-            !Array.isArray(searchParams) ? searchParams : {})
-        .skip(begin)
-        .limit(end)
+        .find({})
         .then(users => {
-            const newData = users.map(user => user.revokeLogin());
-            res.json(newData);
+            res.json(users);
         })
         .catch(err => {
             console.log(err);
             res.status(404).json({error: err});
         });
 });
+
+router.get('/:id', (req, res) => {
+    userSchema
+        .findById(req.params.id)
+        .then(user => res.json(user))
+        .catch(err => {
+            console.log(err);
+            res.status(404).json({error: err})
+        })
+})
 
 router.post("/", async (req, res) => {
 

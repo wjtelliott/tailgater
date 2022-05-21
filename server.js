@@ -1,6 +1,7 @@
 // DEPENDENCIES
 const express = require('express')
 const app = express()
+const cors = require('cors');
 require('dotenv').config()
 const {cars_controller: carsController, users_controller: usersController} = require ("./controllers")
 const mongoose = require('mongoose');
@@ -16,6 +17,7 @@ mongoose.connect(process.env.MONGO_URI,
 
 // CONFIGURATION / MIDDLEWARE
 
+app.use(cors());
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
