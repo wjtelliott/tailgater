@@ -4,7 +4,7 @@ const router = require ("express").Router()
 router.get("/:id", (req, res) => {
 
     userSchema
-        .find(userLoginId, req.params.id)
+        .find(userLoginId, {req.params.id})
         .then(users => {
             const newData = users.map(user => user.revokeLogin());
             res.json(newData);
