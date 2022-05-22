@@ -23,6 +23,18 @@ router.get('/:id', (req, res) => {
         })
 })
 
+router.get('/myprofile/:id', (req, res) => {
+    userSchema
+        .find({
+            userLoginId: req.params.id
+        })
+        .then(user => res.json(user))
+        .catch(err => {
+            console.log(err);
+            res.status(404).json(err)
+        })
+})
+
 router.post("/", async (req, res) => {
 
     const {
