@@ -5,11 +5,11 @@ router.get("/", (req, res) => {
     carSchema.find()
         .populate('userId')
         .then((cars) => {
-            const formattedCars = cars.map(car => {
-                car.userId = car.userId.revokeLogin();
-                return car;
-            })
-            res.json(formattedCars);
+            // const formattedCars = cars.map(car => {
+            //     car.userId = car.userId.revokeLogin();
+            //     return car;
+            // })
+            res.json(cars);
         })
         .catch((err) => {
 
@@ -20,11 +20,12 @@ router.get("/", (req, res) => {
 
 router.get('/mylistings/id/:id', (req, res) => {
 
+
     carSchema
         .find()
         .lean()
         .then(cars => {
-            const filteredCars = cars.filter(el => el.userId === req.params.id)
+            const filteredCars = cars.filter(el => el.userId == req.params.id)
             res.json(filteredCars);
         })
         .catch(err => {
@@ -38,7 +39,7 @@ router.get('/mylistings/sub/:id', (req, res) => {
         .find()
         .populate('userId')
         .then(cars => {
-            const formattedCars = cars.filter(car => car.userId.userLoginId === req.params.id)
+            const formattedCars = cars.filter(car => car.userId.userLoginId == req.params.id)
             res.json(formattedCars);
         })
         .catch(err => {
@@ -60,11 +61,11 @@ router.get('/:start/:amount', (req, res) => {
         .limit(amt)
         .populate('userId')
         .then(cars => {
-            const formattedCars = cars.map(car => {
-                car.userId = car.userId.revokeLogin();
-                return car;
-            })
-            res.json(formattedCars);
+            // const formattedCars = cars.map(car => {
+            //     car.userId = car.userId.revokeLogin();
+            //     return car;
+            // })
+            res.json(cars);
         })
         .catch(err => {
             console.log(err);

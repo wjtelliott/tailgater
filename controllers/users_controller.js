@@ -1,6 +1,31 @@
 const { userSchema } = require('../models/')
 const router = require ("express").Router()
 
+router.get('/data/seedall', async (req, res) => {
+
+
+    const data = await userSchema.findOne();
+    if (data) return res.status(418).json({error: 'Data is already seeded'})
+
+
+    // insert all users
+    await userSchema.insertMany(require('../seeders/user-seed-data'));
+
+    // Create car schema var and get car mock data
+    const { carSchema } = require('../models');
+    const carMockData = require('../seeders/car-seed-data');
+
+    for (let i = 0; i < 10; i++) {
+        const foundUser = await userSchema.find().lean().skip(i);
+        let currentCarData = carMockData[i];
+        currentCarData.userId = foundUser[0]._id;
+        await carSchema.create(currentCarData);
+    }
+
+    res.status(418).json({ message: 'Server is now seeded' })
+})
+
+
 router.get("/", (req, res) => {
     userSchema
         .find({})
