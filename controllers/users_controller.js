@@ -25,7 +25,7 @@ router.get('/:id', (req, res) => {
 
 router.get('/myprofile/:id', (req, res) => {
     userSchema
-        .find({
+        .findOne({
             userLoginId: req.params.id
         })
         .then(user => res.json(user))
