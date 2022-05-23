@@ -62,6 +62,9 @@ router.get('/myprofile/:id', (req, res) => {
 
 router.post("/", async (req, res) => {
 
+
+    //TODO: We need to make sure we don't redirect the user to the api's endpoint
+
     const {
         name,
         userLogin,
@@ -86,7 +89,8 @@ router.post("/", async (req, res) => {
 
     userSchema.create({ name, userLoginId: userLogin, email, phone, city, state })
         .then((createdUser) => {
-            res.json(createdUser);
+            // res.json(createdUser);
+            res.redirect(req.body.redirect);
         })
         .catch((err) => {
             res.status(404).json({error: err});
