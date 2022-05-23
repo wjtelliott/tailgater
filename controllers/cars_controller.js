@@ -73,8 +73,28 @@ router.get('/:start/:amount', (req, res) => {
         })
 })
 
-router.post("/", (req, res) => {
-    carSchema.create(req.body)
+router.post("/", async (req, res) => {
+
+    const {
+        make,
+        model,
+        year,
+        color,
+        milage,
+        condition,
+        imageUrl,
+        userLoginId
+    } = req.body;
+
+
+    if (!make || !model || !year || !userLoginId) return res.status(404).json({ error: 'You must supply all required fields' })
+
+    const { userSchema } = require('../models/');
+    const user = await userSchema.findOne({ userLoginId: userLoginId }).lean();
+
+    if (!user) return res.status(404).json({ error: 'That user does not exist' });
+
+    carSchema.create({make, model, year, color, milage, condition, imageUrl, userId: user._id})
         .then((createdCar) => {
             res.json(createdCar);
         })
