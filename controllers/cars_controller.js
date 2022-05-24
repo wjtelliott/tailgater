@@ -96,7 +96,6 @@ router.post("/", async (req, res) => {
 
     carSchema.create({make, model, year, color, milage, condition, imageUrl, userId: user._id})
         .then((createdCar) => {
-            // res.json(createdCar);
             res.redirect(req.body.redirect);
         })
         .catch((err) => {
